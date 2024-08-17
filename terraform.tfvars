@@ -1,6 +1,8 @@
-cidr_blocks = [
-    {cidr_block = "10.0.0.0/16", name = "dev-vpc"},
-    {cidr_block = "10.0.10.0/24", name = "dev-subnet"}
-]
-# vpc_cidr_block = "10.0.0.0/16"
-# subnet_cidr_block = "10.0.20.0/24"
+vpc_cidr_block = "10.0.0.0/16"
+subnet_cidr_block = "10.0.10.0/24"
+avail_zone = "eu-north-1a"
+env_prefix = "dev"
+my_ip = "77.222.240.2/32"
+web_access_ip = "77.222.240.2/32"
+instance_type = "t3.micro"
+public_key_location = "~/.ssh/id_ed25519.pub"
