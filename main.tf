@@ -21,7 +21,7 @@ module "vpc" {
    } 
 
    tags = {
-      Name = "${var.env_prefix}-subnet-1"
+      Name = "${var.env_prefix}-demo-vpc"
    }
 }
 
