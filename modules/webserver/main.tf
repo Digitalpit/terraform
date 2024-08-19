@@ -1,5 +1,6 @@
-resource "aws_default_security_group" "default-sg" {
+resource "aws_security_group" "demo-app-sg" {
 
+   name = "demo-app-sg"
    vpc_id = var.vpc_id
    
    ingress {
@@ -50,7 +51,7 @@ resource "aws_instance" "demo-app-server" {
    instance_type = var.instance_type
 
    subnet_id = var.subnet_id
-   vpc_security_group_ids = [aws_default_security_group.default-sg.id]
+   vpc_security_group_ids = [aws_security_group.demo-app-sg.id]
    availability_zone = var.avail_zone
 
    associate_public_ip_address = true
