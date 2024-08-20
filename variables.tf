@@ -1,7 +1,9 @@
 variable vpc_cidr_block {}
-variable subnet_cidr_block {}
+variable subnet_cidr_block_1 {}
+variable subnet_cidr_block_2 {}
 variable private_subnet_cidr_block {}
 variable avail_zone {}
+variable avail_zone2 {}
 variable env_prefix {}
 variable my_ip {}
 variable web_access_ip {}

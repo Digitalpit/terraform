@@ -11,10 +11,10 @@ resource "aws_security_group" "demo-app-sg" {
    }
 
    ingress {
-      from_port = 8080
-      to_port = 8080
+      from_port = 80
+      to_port = 80
       protocol = "TCP"
-      cidr_blocks = [var.web_access_ip]
+      cidr_blocks = ["10.0.0.0/16"]
    }
 
    egress {
