@@ -5,4 +5,4 @@ sudo systemctl start nginx
 echo '<!doctype html>
 <html lang="en"><h1> Home page! </h1></br>
 <h3>(App instance)</h3>
-</html>' | sudo tee /var/www/html/index.html
+</html>' | sudo tee /usr/share/nginx/html/index.html

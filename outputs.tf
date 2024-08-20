@@ -1,6 +1,7 @@
 
 # Public IP APP EC2 instance
 output "ec2_app_public_IP" {
+  description = "Public IP of EC2"
   value       = module.demo-server.instance.public_ip
  }
 
@@ -8,4 +9,4 @@ output "ec2_app_public_IP" {
 output "lb_dns_name" {
   description = "DNS of Load balancer"
   value       = aws_lb.demo_alb.dns_name
-}
+} 
