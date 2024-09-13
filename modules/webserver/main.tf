@@ -37,7 +37,7 @@ resource "aws_security_group" "demo-app-sg" {
       from_port   = 3306
       to_port     = 3306
       protocol    = "TCP"
-      cidr_blocks = ["10.0.30.0/24"]
+      cidr_blocks = [var.private_subnet_cidr_block]
       prefix_list_ids = []
    }
 

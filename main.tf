@@ -103,6 +103,18 @@ resource "aws_lb" "demo_alb" {
  }
 }
 
+# Listener HTTP
+resource "aws_lb_listener" "demo_alb_listener" {
+ load_balancer_arn = aws_lb.demo_alb.arn
+ port              = "80"
+ protocol          = "HTTP"
+
+ default_action {
+   type             = "forward"
+   target_group_arn = aws_lb_target_group.demo-tg.arn
+ }
+}
+/*
 # Request and validate an SSL certificate from AWS Certificate Manager (ACM)
 resource "aws_acm_certificate" "demo-certificate" {
   domain_name       = "example.com"
@@ -119,31 +131,21 @@ resource "aws_lb_listener_certificate" "demo-lb-certificate" {
   certificate_arn = aws_acm_certificate.demo-certificate.arn
 }
 
-# Listener HTTP
-resource "aws_lb_listener" "demo_alb_listener" {
- load_balancer_arn = aws_lb.demo_alb.arn
- port              = "80"
- protocol          = "HTTP"
-
- default_action {
-   type             = "forward"
-   target_group_arn = aws_lb_target_group.demo-tg.arn
- }
-}
-
 # Listener HTTPS
 resource "aws_lb_listener" "demo_alb_https_listener" {
  load_balancer_arn = aws_lb.demo_alb.arn
- port              = "443"
- protocol          = "HTTPS"
+ port                = "443"
+ protocol            = "HTTPS"
+ certificate_arn     = aws_acm_certificate.demo-certificate.arn
 
  default_action {
    type             = "forward"
    target_group_arn = aws_lb_target_group.demo-tg.arn
+   
  }
 }
 
-/* resource "aws_route53_record" "node" {
+resource "aws_route53_record" "node" {
   zone_id = "ZSxxxxxxx"
   name    = "www.example.com"
   type    = "A"
@@ -156,26 +158,29 @@ resource "aws_lb_listener" "demo_alb_https_listener" {
 
 # APP instance
 module "demo-server" {
-   source         = "./modules/webserver"
-   vpc_id         = module.vpc.vpc_id
-   my_ip          = var.my_ip
-   web_access_ip  = var.web_access_ip
-   env_prefix     = var.env_prefix
-   image_name     = var.image_name
-   instance_type  = var.instance_type
-   subnet_id      = module.vpc.public_subnets[0]
-   avail_zone     = var.avail_zone
+   source                     = "./modules/webserver"
+   vpc_id                     = module.vpc.vpc_id
+   my_ip                      = var.my_ip
+   web_access_ip              = var.web_access_ip
+   env_prefix                 = var.env_prefix
+   image_name                 = var.image_name
+   instance_type              = var.instance_type
+   subnet_id                  = module.vpc.public_subnets[0]
+   avail_zone                 = var.avail_zone
+   private_subnet_cidr_block  = var.private_subnet_cidr_block
 
 }
 
 # DB instance
 module "demo-db-server" {
-   source         = "./modules/dbserver"
-   vpc_id         = module.vpc.vpc_id
-   env_prefix     = var.env_prefix
-   image_name     = var.image_name
-   instance_type  = var.instance_type
-   subnet_id      = module.vpc.private_subnets[0]
-   avail_zone     = var.avail_zone
+   source               = "./modules/dbserver"
+   vpc_id               = module.vpc.vpc_id
+   env_prefix           = var.env_prefix
+   image_name           = var.image_name
+   instance_type        = var.instance_type
+   subnet_id            = module.vpc.private_subnets[0]
+   avail_zone           = var.avail_zone
+   subnet_cidr_block_1  = var.subnet_cidr_block_1
+   subnet_cidr_block_2  = var.subnet_cidr_block_2
 
 }

@@ -6,3 +6,4 @@ variable image_name {}
 variable instance_type {}
 variable subnet_id {}
 variable avail_zone {}
+variable private_subnet_cidr_block {}

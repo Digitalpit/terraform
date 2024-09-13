@@ -2,19 +2,12 @@ resource "aws_security_group" "demo-db-sg" {
 
    name     = "demo-db-sg"
    vpc_id   = var.vpc_id
-   
-   ingress {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "TCP"
-      cidr_blocks = ["10.0.10.0/24","10.0.20.0/24"]
-   }
 
    ingress {
       from_port   = 3306
       to_port     = 3306
       protocol    = "TCP"
-      cidr_blocks = ["10.0.10.0/24","10.0.20.0/24"]
+      cidr_blocks = [var.subnet_cidr_block_1,var.subnet_cidr_block_2]
    }
 
    egress {
@@ -49,11 +42,6 @@ data "aws_ami" "latest-amazon-linux-image" {
    }
 }
 
-/*  resource "aws_key_pair" "ssh_key" {
-   key_name = "server-key"
-   public_key = file(var.public_key_location)
- } */
-
 resource "aws_instance" "demo-db-server" {
    ami                     = data.aws_ami.latest-amazon-linux-image.id
    instance_type           = var.instance_type
@@ -64,7 +52,6 @@ resource "aws_instance" "demo-db-server" {
 
    associate_public_ip_address = false
    key_name                    = "server-key-pair"
-   #key_name = aws_key_pair.ssh_key.key_name
 
    user_data                   = file("modules/webserver/script.sh")
    
